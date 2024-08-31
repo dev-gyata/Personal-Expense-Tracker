@@ -17,9 +17,7 @@ void main() {
     late AuthenticationService authenticationService;
 
     setUp(() {
-      dio = Dio(
-        BaseOptions(),
-      );
+      dio = Dio();
       dioAdapter = DioAdapter(dio: dio, printLogs: true);
       authenticationService = AuthenticationService(dio: dio);
     });

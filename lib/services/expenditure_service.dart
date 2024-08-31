@@ -1,0 +1,96 @@
+import 'package:dio/dio.dart';
+import 'package:personal_expense_tracker/dtos/dtos.dart';
+import 'package:personal_expense_tracker/exceptions/api_exception.dart';
+
+class ExpenditureService {
+  const ExpenditureService({
+    required Dio dio,
+  }) : _dio = dio;
+
+  final Dio _dio;
+
+  Future<List<ExpenditureResponseDto>> getUserExpenditure() async {
+    try {
+      final response = await _dio.get(
+        '/user/expenditure',
+      );
+      // ignore: avoid_dynamic_calls
+      return (response.data['data'] as List)
+          .map((e) => ExpenditureResponseDto.fromMap(e as Map<String, dynamic>))
+          .toList();
+    } on DioException catch (_) {
+      throw ApiException(
+        message: 'Unable to fetch user Expenditure',
+      );
+    }
+  }
+
+  Future<ExpenditureResponseDto> getUserExpenditureById({
+    required String expenditureId,
+  }) async {
+    try {
+      final response = await _dio.get(
+        '/user/expenditure/$expenditureId',
+      );
+      return ExpenditureResponseDto.fromMap(
+        response.data as Map<String, dynamic>,
+      );
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 400) {
+        throw ApiException(
+          message: 'Invalid Expenditure id',
+        );
+      }
+      if (e.response?.statusCode == 404) {
+        throw ApiException(
+          message: 'Expenditure not found',
+        );
+      }
+      throw ApiException(
+        message: 'Unable to fetch user expenditure',
+      );
+    }
+  }
+
+  Future<void> createUserExpenditure({
+    required ExpenditureCreationRequestDto creationRequestDto,
+  }) async {
+    try {
+      await _dio.post(
+        '/user/expenditure',
+        data: creationRequestDto.toJson(),
+      );
+    } on DioException catch (e) {
+      throw ApiException(
+        message: 'Unable to create user Expenditure',
+      );
+    }
+  }
+
+  Future<ExpenditureResponseDto> deleteUserExpenditure({
+    required String expenditureId,
+  }) async {
+    try {
+      final deletedExpenditureResponse = await _dio.delete(
+        '/user/expenditure/$expenditureId',
+      );
+      return ExpenditureResponseDto.fromMap(
+        deletedExpenditureResponse.data as Map<String, dynamic>,
+      );
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 400) {
+        throw ApiException(
+          message: 'Invalid Expenditure id',
+        );
+      }
+      if (e.response?.statusCode == 404) {
+        throw ApiException(
+          message: 'Expenditure not found',
+        );
+      }
+      throw ApiException(
+        message: 'Unable to fetch user expenditure',
+      );
+    }
+  }
+}
