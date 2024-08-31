@@ -40,6 +40,7 @@ class AppTextfield extends HookWidget {
     this.label,
     this.onChanged,
     this.errorText,
+    this.prefixIcon,
   });
   const AppTextfield.password({
     super.key,
@@ -47,19 +48,30 @@ class AppTextfield extends HookWidget {
     this.hintText,
     this.label,
     this.errorText,
+    this.prefixIcon,
   }) : type = AppTextfieldType.password;
+  const AppTextfield.text({
+    super.key,
+    this.onChanged,
+    this.hintText,
+    this.label,
+    this.errorText,
+    this.prefixIcon,
+  }) : type = AppTextfieldType.text;
   const AppTextfield.email({
     super.key,
     this.onChanged,
     this.hintText,
     this.label,
     this.errorText,
+    this.prefixIcon,
   }) : type = AppTextfieldType.email;
   final AppTextfieldType type;
   final String? label;
   final ValueChanged<String>? onChanged;
   final String? hintText;
   final String? errorText;
+  final Widget? prefixIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +89,7 @@ class AppTextfield extends HookWidget {
             return switch (type) {
               AppTextfieldType.email => const Icon(Icons.email),
               AppTextfieldType.password => const Icon(Icons.key),
-              _ => const SizedBox.expand(),
+              _ => prefixIcon ?? const SizedBox.shrink(),
             };
           },
         ),

@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
-import 'package:personal_expense_tracker/service_locator/sl.dart';
+import 'package:personal_expense_tracker/service_locator/service_locator.dart';
 
 class AppBlocObserver extends BlocObserver {
   const AppBlocObserver();

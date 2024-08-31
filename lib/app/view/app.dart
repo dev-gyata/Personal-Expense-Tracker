@@ -4,7 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:personal_expense_tracker/l10n/l10n.dart';
 import 'package:personal_expense_tracker/repositories/authentication_repository.dart';
 import 'package:personal_expense_tracker/router/app_router.dart';
-import 'package:personal_expense_tracker/service_locator/sl.dart';
+import 'package:personal_expense_tracker/service_locator/service_locator.dart';
+import 'package:personal_expense_tracker/services/authentication_service.dart';
 
 class App extends StatelessWidget {
   App({super.key});
@@ -16,7 +17,9 @@ class App extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider(
-          create: (context) => AuthenticationRepository(),
+          create: (context) => AuthenticationRepository(
+            authenticationService: sl<AuthenticationService>(),
+          ),
         ),
       ],
       child: MaterialApp.router(

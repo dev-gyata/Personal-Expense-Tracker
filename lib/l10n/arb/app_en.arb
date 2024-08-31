@@ -10,5 +10,11 @@
     "enterYourEmail": "Enter your email address",
     "min8Chars": "Minimum 8 chars",
     "passwordError": "Password must be at least 8 characters",
-    "emailError": "Enter a valid email address"
+    "emailError": "Enter a valid email address",
+    "submit": "Submit",
+    "name": "Name",
+    "nameHint": "Enter your name",
+    "nameInvalidError": "Name must be at least 2 characters",
+    "ok": "Ok",
+    "signup": "Sign up"
 }

@@ -2,11 +2,11 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:formz/formz.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:personal_expense_tracker/exceptions/login_exception.dart';
+import 'package:personal_expense_tracker/exceptions/signup_exception.dart';
 import 'package:personal_expense_tracker/login/cubit/login_cubit.dart';
-import 'package:personal_expense_tracker/models/email_model.dart';
-import 'package:personal_expense_tracker/models/password_model.dart';
+import 'package:personal_expense_tracker/models/models.dart';
 import 'package:personal_expense_tracker/repositories/authentication_repository.dart';
+import 'package:personal_expense_tracker/sign_up/cubit/sign_up_cubit.dart';
 
 class MockAuthenticationRepository extends Mock
     implements AuthenticationRepository {}
@@ -18,48 +18,59 @@ void main() {
     authenticationRepository = MockAuthenticationRepository();
   });
 
-  group('Login Cubit', () {
-    test('initial state is LoginState', () {
-      final loginBloc = LoginCubit(
+  group('SignUp Cubit', () {
+    test('initial state is SignUpState', () {
+      final signupCubit = SignUpCubit(
         authenticationRepository: authenticationRepository,
       );
-      expect(loginBloc.state, const LoginState());
+      expect(signupCubit.state, const SignUpState());
     });
 
-    group('Login Submitted', () {
-      blocTest<LoginCubit, LoginState>(
+    group('signup Submitted', () {
+      blocTest<SignUpCubit, SignUpState>(
         'cubit emits [submissionInProgress, submissionSuccess] '
-        'when login succeeds',
+        'when signup succeeds',
         build: () =>
-            LoginCubit(authenticationRepository: authenticationRepository),
+            SignUpCubit(authenticationRepository: authenticationRepository),
         act: (cubit) {
           cubit
+            ..onNameChanged('Test')
             ..onEmailChanged('example@example.com')
             ..onPasswordChanged('Secure@123')
             ..onSubmit();
         },
         setUp: () {
           when(
-            () => authenticationRepository.logIn(
+            () => authenticationRepository.signUp(
+              name: 'Test',
               email: 'example@example.com',
               password: 'Secure@123',
             ),
           ).thenAnswer((_) => Future<void>.value());
         },
         expect: () => [
-          const LoginState(email: EmailModel.dirty('example@example.com')),
-          const LoginState(
+          const SignUpState(
+            name: NameModel.dirty('Test'),
+          ),
+          const SignUpState(
+            name: NameModel.dirty('Test'),
+            email: EmailModel.dirty('example@example.com'),
+          ),
+          const SignUpState(
+            name: NameModel.dirty('Test'),
             email: EmailModel.dirty('example@example.com'),
             password: PasswordModel.dirty('Secure@123'),
             isValid: true,
           ),
-          const LoginState(
+          const SignUpState(
+            name: NameModel.dirty('Test'),
             email: EmailModel.dirty('example@example.com'),
             password: PasswordModel.dirty('Secure@123'),
             isValid: true,
             status: FormzSubmissionStatus.inProgress,
           ),
-          const LoginState(
+          const SignUpState(
+            name: NameModel.dirty('Test'),
             email: EmailModel.dirty('example@example.com'),
             password: PasswordModel.dirty('Secure@123'),
             isValid: true,
@@ -67,46 +78,56 @@ void main() {
           ),
         ],
       );
-      blocTest<LoginCubit, LoginState>(
+      blocTest<SignUpCubit, SignUpState>(
         'cubit emits [submissionInProgress, submissionFailed] '
-        'when login fails',
+        'when signup fails',
         build: () =>
-            LoginCubit(authenticationRepository: authenticationRepository),
+            SignUpCubit(authenticationRepository: authenticationRepository),
         act: (cubit) {
           cubit
+            ..onNameChanged('Bad')
             ..onEmailChanged('bad@credentials.com')
             ..onPasswordChanged('Secure@123')
             ..onSubmit();
         },
         setUp: () {
           when(
-            () => authenticationRepository.logIn(
+            () => authenticationRepository.signUp(
+              name: 'Bad',
               email: 'bad@credentials.com',
               password: 'Secure@123',
             ),
           ).thenAnswer(
-            (_) => throw LoginException(message: 'Invalid email or password'),
+            (_) => throw SignupException(message: 'Invalid credentials'),
           );
         },
         expect: () => [
-          const LoginState(email: EmailModel.dirty('bad@credentials.com')),
-          const LoginState(
+          const SignUpState(
+            name: NameModel.dirty('Bad'),
+          ),
+          const SignUpState(
+            name: NameModel.dirty('Bad'),
+            email: EmailModel.dirty('bad@credentials.com'),
+          ),
+          const SignUpState(
+            name: NameModel.dirty('Bad'),
             email: EmailModel.dirty('bad@credentials.com'),
             password: PasswordModel.dirty('Secure@123'),
             isValid: true,
           ),
-          const LoginState(
+          const SignUpState(
+            name: NameModel.dirty('Bad'),
             email: EmailModel.dirty('bad@credentials.com'),
             password: PasswordModel.dirty('Secure@123'),
             isValid: true,
             status: FormzSubmissionStatus.inProgress,
           ),
-          const LoginState(
+          const SignUpState(
+            name: NameModel.dirty('Bad'),
             email: EmailModel.dirty('bad@credentials.com'),
             password: PasswordModel.dirty('Secure@123'),
             isValid: true,
             status: FormzSubmissionStatus.failure,
-            errorMessage: 'Invalid email or password',
           ),
         ],
       );

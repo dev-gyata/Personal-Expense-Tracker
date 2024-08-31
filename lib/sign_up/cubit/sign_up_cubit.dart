@@ -1,17 +1,17 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
-import 'package:personal_expense_tracker/exceptions/login_exception.dart';
 import 'package:personal_expense_tracker/models/models.dart';
 import 'package:personal_expense_tracker/repositories/authentication_repository.dart';
 
-part 'login_state.dart';
+part 'sign_up_state.dart';
 
-class LoginCubit extends Cubit<LoginState> {
-  LoginCubit({
+class SignUpCubit extends Cubit<SignUpState> {
+  SignUpCubit({
     required AuthenticationRepository authenticationRepository,
   })  : _authenticationRepository = authenticationRepository,
-        super(const LoginState());
+        super(const SignUpState());
+
   final AuthenticationRepository _authenticationRepository;
 
   void onEmailChanged(String email) {
@@ -19,7 +19,7 @@ class LoginCubit extends Cubit<LoginState> {
     emit(
       state.copyWith(
         email: updatedEmail,
-        isValid: Formz.validate([updatedEmail, state.password]),
+        isValid: Formz.validate([updatedEmail, state.name, state.password]),
       ),
     );
   }
@@ -29,7 +29,17 @@ class LoginCubit extends Cubit<LoginState> {
     emit(
       state.copyWith(
         password: updatedPassword,
-        isValid: Formz.validate([updatedPassword, state.email]),
+        isValid: Formz.validate([updatedPassword, state.name, state.email]),
+      ),
+    );
+  }
+
+  void onNameChanged(String name) {
+    final updatedName = NameModel.dirty(name);
+    emit(
+      state.copyWith(
+        name: updatedName,
+        isValid: Formz.validate([updatedName, state.email, state.password]),
       ),
     );
   }
@@ -39,18 +49,14 @@ class LoginCubit extends Cubit<LoginState> {
     if (state.isValid) {
       emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
       try {
-        await _authenticationRepository.logIn(
+        await _authenticationRepository.signUp(
           email: state.email.value,
+          name: state.name.value,
           password: state.password.value,
         );
         emit(state.copyWith(status: FormzSubmissionStatus.success));
-      } on LoginException catch (e) {
-        emit(
-          state.copyWith(
-            status: FormzSubmissionStatus.failure,
-            errorMessage: e.message,
-          ),
-        );
+      } catch (_) {
+        emit(state.copyWith(status: FormzSubmissionStatus.failure));
       }
     }
   }
