@@ -3,5 +3,12 @@
     "counterAppBarTitle": "Counter",
     "@counterAppBarTitle": {
         "description": "Text shown in the AppBar of the Counter Page"
-    }
+    },
+    "signIn": "Sign in",
+    "email": "Email",
+    "password": "Password",
+    "enterYourEmail": "Enter your email address",
+    "min8Chars": "Minimum 8 chars",
+    "passwordError": "Password must be at least 8 characters",
+    "emailError": "Enter a valid email address"
 }
