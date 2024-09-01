@@ -16,5 +16,19 @@
     "nameHint": "Enter your name",
     "nameInvalidError": "Name must be at least 2 characters",
     "ok": "Ok",
-    "signup": "Sign up"
+    "signup": "Sign up",
+    "simplifyYourExpenses": "Simplify your expenses",
+    "expenses": "Expenses",
+    "income": "Income",
+    "logout": "Logout",
+    "appName": "Expendi",
+    "dontHaveAnAccount": "Don't have an account?",
+    "alreadyHaveAnAccount": "Already have an account?",
+    "createAccount": "Create Account",
+    "fillYourInfoBelow": "Fill your information below",
+    "loginSuccess": "Login Successful",
+    "signupSuccess": "Signup Successful",
+    "settings": "Settings",
+    "dashboard": "Dashboard",
+    "expenditure": "Expenditure"
 }

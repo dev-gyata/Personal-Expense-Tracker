@@ -25,10 +25,11 @@ void main() {
           const nameOfRevenue = 'salary';
           const amount = 100.0;
 
-          dioAdapter.onPost('/user/income', data: {
-            'nameOfRevenue': 'salary',
-            'amount': 100,
-          }, (server) {
+          dioAdapter.onPost('/user/income',
+              data: IncomeCreationRequestDto.fromMap(const {
+                'nameOfRevenue': 'salary',
+                'amount': 100.0,
+              }).toJson(), (server) {
             return server.reply(
               201,
               {
@@ -38,7 +39,7 @@ void main() {
           });
 
           expect(
-            () => incomeService.createUserIncome(
+            () async => incomeService.createUserIncome(
               incomeRequestDto: const IncomeCreationRequestDto(
                 nameOfRevenue: nameOfRevenue,
                 amount: amount,

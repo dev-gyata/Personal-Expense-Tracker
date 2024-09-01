@@ -10,7 +10,7 @@ enum AppTextfieldType {
   TextInputType get getTextInputType {
     return switch (this) {
       AppTextfieldType.email => TextInputType.emailAddress,
-      AppTextfieldType.password => TextInputType.text,
+      AppTextfieldType.password => TextInputType.visiblePassword,
       _ => TextInputType.text,
     };
   }
@@ -81,6 +81,14 @@ class AppTextfield extends HookWidget {
       keyboardType: type.getTextInputType,
       obscureText: obscureText.value,
       decoration: InputDecoration(
+        border: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(8),
+          ),
+          borderSide: BorderSide(
+            width: 20,
+          ),
+        ),
         errorText: errorText,
         labelText: label ?? type.getLabelText(context),
         hintText: hintText ?? type.getHintText(context),

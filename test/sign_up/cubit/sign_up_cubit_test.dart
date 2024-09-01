@@ -128,6 +128,7 @@ void main() {
             password: PasswordModel.dirty('Secure@123'),
             isValid: true,
             status: FormzSubmissionStatus.failure,
+            errorMessage: 'Invalid credentials',
           ),
         ],
       );

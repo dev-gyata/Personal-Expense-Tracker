@@ -20,8 +20,13 @@ dependencies:
     sdk: flutter
   formz: ^0.7.0
   freezed: ^2.5.7
+  gap: ^3.0.1
   get_it: ^7.7.0
+  google_fonts: ^6.2.1
+  hydrated_bloc: ^9.1.5
   intl: ^0.19.0
+  path_provider: ^2.1.4
+  
 
 dev_dependencies:
   auto_route_generator: ^9.0.0

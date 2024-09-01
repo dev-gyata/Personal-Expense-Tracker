@@ -26,11 +26,12 @@ void main() {
           const category = 'transport';
           const estimatedAmount = 500.0;
 
-          dioAdapter.onPost('/user/expenditure', data: {
-            'category': 'transport',
-            'nameOfItem': 'transport',
-            'estimatedAmount': 500,
-          }, (server) {
+          dioAdapter.onPost('/user/expenditure',
+              data: ExpenditureCreationRequestDto.fromMap(const {
+                'category': 'transport',
+                'nameOfItem': 'transport',
+                'estimatedAmount': 500.0,
+              }).toJson(), (server) {
             return server.reply(
               201,
               {

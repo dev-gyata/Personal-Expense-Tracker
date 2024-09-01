@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:personal_expense_tracker/dtos/login_request_dto.dart';
 import 'package:personal_expense_tracker/dtos/signup_request_dto.dart';
 import 'package:personal_expense_tracker/enums/authentication_status.dart';
+import 'package:personal_expense_tracker/models/user_model.dart';
 import 'package:personal_expense_tracker/services/authentication_service.dart';
 
 class AuthenticationRepository {
@@ -23,7 +24,11 @@ class AuthenticationRepository {
     );
     // Save user token
     // Get user details here
-    _authController.add(AuthenticationStatus.authenticated);
+    _authController.add(
+      AuthenticationStatusAuthenticated(
+        user: const UserModel(name: 'name', email: 'email', id: 'id'),
+      ),
+    );
     // return
   }
 
@@ -47,7 +52,7 @@ class AuthenticationRepository {
 
   Future<void> logOut() async {
     // TODODelete credentials
-    _authController.add(AuthenticationStatus.unauthenticated);
+    _authController.add(AuthenticationStatusUnauthenticated());
   }
 
   void dispose() => _authController.close();

@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
+import 'package:personal_expense_tracker/exceptions/signup_exception.dart';
 import 'package:personal_expense_tracker/models/models.dart';
 import 'package:personal_expense_tracker/repositories/authentication_repository.dart';
 
@@ -55,8 +56,13 @@ class SignUpCubit extends Cubit<SignUpState> {
           password: state.password.value,
         );
         emit(state.copyWith(status: FormzSubmissionStatus.success));
-      } catch (_) {
-        emit(state.copyWith(status: FormzSubmissionStatus.failure));
+      } on SignupException catch (e) {
+        emit(
+          state.copyWith(
+            status: FormzSubmissionStatus.failure,
+            errorMessage: e.message,
+          ),
+        );
       }
     }
   }

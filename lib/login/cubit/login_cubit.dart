@@ -35,7 +35,7 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   // ignore: avoid_void_async
-  void onSubmit() async {
+  Future<void> onSubmit() async {
     if (state.isValid) {
       emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
       try {
