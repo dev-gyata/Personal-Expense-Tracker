@@ -60,5 +60,9 @@
     "enterYourRevenueName": "Enter your revenue name",
     "nameOfRevenueOfError": "Revenue name should be at least 2 characters",
     "amount": "Amount",
-    "enterYourRevenueAmount": "Enter your revenue amount"
+    "enterYourRevenueAmount": "Enter your revenue amount",
+    "logInToYourAccount": "Log in to your account",
+    "provideEmailAndPassword":"Provide your email and password to have access to your dashboard",
+    "createAnAccount": "Create an account",
+    "provideYourNameEmailAndPassword": "Provide your name, email and password to be able create an account with us"
 }

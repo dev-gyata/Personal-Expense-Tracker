@@ -9,7 +9,7 @@ class ExpenditureUtils {
     List<ExpenditureModel> expenditures,
   ) {
     final expendituresByCategoryMap =
-        expenditures.groupListsBy((e) => e.category.toLowerCase());
+        expenditures.groupListsBy((e) => e.category.trim().toLowerCase());
     final expendituresByCategory = expendituresByCategoryMap.entries.map((e) {
       final category = e.key;
       final expenditures = e.value;

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:gap/gap.dart';
+import 'package:personal_expense_tracker/config/config.dart';
+import 'package:personal_expense_tracker/extensions/extensions.dart';
 import 'package:personal_expense_tracker/l10n/l10n.dart';
 
 enum AppTextfieldType {
@@ -88,46 +91,100 @@ class AppTextfield extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final obscureText = useState(type == AppTextfieldType.password);
-    return TextField(
-      onChanged: onChanged,
-      keyboardType: type.getTextInputType,
-      obscureText: obscureText.value,
-      decoration: InputDecoration(
-        border: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(8),
-          ),
-          borderSide: BorderSide(
-            width: 20,
-          ),
-        ),
-        errorText: errorText,
-        labelText: label ?? type.getLabelText(context),
-        hintText: hintText ?? type.getHintText(context),
-        prefixIcon: Builder(
-          builder: (context) {
-            return switch (type) {
-              AppTextfieldType.email => const Icon(Icons.email),
-              AppTextfieldType.password => const Icon(Icons.key),
-              AppTextfieldType.amount => const Icon(Icons.attach_money_sharp),
-              _ => prefixIcon ?? const SizedBox.shrink(),
-            };
-          },
-        ),
-        suffixIcon: Builder(
-          builder: (context) {
-            return switch (type) {
-              AppTextfieldType.password => GestureDetector(
-                  onTap: () => obscureText.value = !obscureText.value,
-                  child: Icon(
-                    obscureText.value ? Icons.visibility_off : Icons.visibility,
-                  ),
+    final labelToShow = label ?? type.getLabelText(context);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (labelToShow != null) ...[
+          Row(
+            children: [
+              Text(labelToShow),
+              Text(
+                '*',
+                style: context.smallText?.copyWith(
+                  color: AppColors.kRedColor,
                 ),
-              _ => const SizedBox.shrink(),
-            };
-          },
+              ),
+            ],
+          ),
+          const Gap(10),
+        ],
+        DecoratedBox(
+          decoration: BoxDecoration(
+            // color: AppColors.kGreyColor,
+            color: AppColors.kGhostWhite,
+            boxShadow: const [
+              BoxShadow(
+                offset: Offset(0, 1),
+                blurRadius: 2,
+                color: AppColors.kShadowColor,
+                // blurStyle: BlurStyle.solid,
+              ),
+            ],
+            border: Border.all(
+              color: AppColors.kWhiteColor,
+            ),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: TextField(
+            onChanged: onChanged,
+            keyboardType: type.getTextInputType,
+            obscureText: obscureText.value,
+            decoration: InputDecoration(
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+              ),
+              hintText: hintText ?? type.getHintText(context),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(
+                  color: AppColors.primary,
+                ),
+              ),
+              border: OutlineInputBorder(
+                borderSide: BorderSide.none,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(
+                  color: AppColors.kRedColor,
+                ),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(
+                  color: AppColors.kRedColor,
+                ),
+              ),
+              suffixIcon: Builder(
+                builder: (context) {
+                  return switch (type) {
+                    AppTextfieldType.password => GestureDetector(
+                        onTap: () => obscureText.value = !obscureText.value,
+                        child: Icon(
+                          obscureText.value
+                              ? Icons.visibility_off_outlined
+                              : Icons.visibility_rounded,
+                        ),
+                      ),
+                    _ => const SizedBox.shrink(),
+                  };
+                },
+              ),
+            ),
+          ),
         ),
-      ),
+        if (errorText != null) ...[
+          Text(
+            errorText ?? '',
+            style: context.smallText?.copyWith(
+              color: AppColors.kRedColor,
+              fontSize: 12,
+            ),
+          ),
+        ],
+      ],
     );
   }
 }
