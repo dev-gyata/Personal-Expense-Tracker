@@ -12,6 +12,7 @@ import 'package:personal_expense_tracker/router/app_router.dart';
 import 'package:personal_expense_tracker/router/app_router.gr.dart';
 import 'package:personal_expense_tracker/service_locator/service_locator.dart';
 import 'package:personal_expense_tracker/services/authentication_service.dart';
+import 'package:personal_expense_tracker/services/token_storage_service.dart';
 
 class App extends StatelessWidget {
   App({super.key});
@@ -25,6 +26,7 @@ class App extends StatelessWidget {
         RepositoryProvider(
           create: (context) => AuthenticationRepository(
             authenticationService: sl<AuthenticationService>(),
+            tokenStorageService: sl<TokenStorageService>(),
           ),
         ),
       ],

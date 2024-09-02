@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:personal_expense_tracker/router/app_router.gr.dart';
 
-@AutoRouterConfig(replaceInRouteName: 'Screen|Page,Route')
+@AutoRouterConfig(replaceInRouteName: 'Screen|Page|Tab,Route')
 class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
@@ -11,6 +11,11 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(
           page: HomeRoute.page,
+          children: [
+            AutoRoute(page: DashboardRoute.page),
+            AutoRoute(page: ExpenditureRoute.page),
+            AutoRoute(page: SettingsRoute.page),
+          ],
         ),
       ];
 }

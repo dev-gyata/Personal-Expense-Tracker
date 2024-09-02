@@ -26,8 +26,8 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   final AuthenticationRepository _authenticationRepository;
   StreamSubscription<AuthenticationStatus>? _statusSubscription;
 
-  Future<void> logOut() async {
-    await _authenticationRepository.logOut();
+  void logOut() {
+    _authenticationRepository.logOut();
   }
 
   @override

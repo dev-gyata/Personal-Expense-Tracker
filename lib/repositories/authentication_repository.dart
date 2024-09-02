@@ -5,13 +5,17 @@ import 'package:personal_expense_tracker/dtos/signup_request_dto.dart';
 import 'package:personal_expense_tracker/enums/authentication_status.dart';
 import 'package:personal_expense_tracker/models/user_model.dart';
 import 'package:personal_expense_tracker/services/authentication_service.dart';
+import 'package:personal_expense_tracker/services/token_storage_service.dart';
 
 class AuthenticationRepository {
   AuthenticationRepository({
     required AuthenticationService authenticationService,
-  }) : _authenticationService = authenticationService;
+    required TokenStorageService tokenStorageService,
+  })  : _authenticationService = authenticationService,
+        _tokenStorageService = tokenStorageService;
 
   final AuthenticationService _authenticationService;
+  final TokenStorageService _tokenStorageService;
 
   final _authController = StreamController<AuthenticationStatus>();
 
@@ -23,10 +27,13 @@ class AuthenticationRepository {
       loginRequestDto: LoginRequestDto(email: email, password: password),
     );
     // Save user token
+    await _tokenStorageService.saveToken(
+      accessToken: loginResponse.accessToken,
+    );
     // Get user details here
     _authController.add(
-      AuthenticationStatusAuthenticated(
-        user: const UserModel(name: 'name', email: 'email', id: 'id'),
+      const AuthenticationStatusAuthenticated(
+        user: UserModel(name: 'name', email: 'email', id: 'id'),
       ),
     );
     // return
@@ -51,8 +58,8 @@ class AuthenticationRepository {
   }
 
   Future<void> logOut() async {
-    // TODODelete credentials
-    _authController.add(AuthenticationStatusUnauthenticated());
+    await _tokenStorageService.deleteToken();
+    _authController.add(const AuthenticationStatusUnauthenticated());
   }
 
   void dispose() => _authController.close();

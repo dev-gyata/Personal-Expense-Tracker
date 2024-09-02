@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:personal_expense_tracker/l10n/l10n.dart';
+import 'package:personal_expense_tracker/widgets/app_dialog.dart';
+import 'package:personal_expense_tracker/widgets/theme_picker_widget.dart';
 
 extension BuildContextExtensions on BuildContext {
   TextStyle? get displayLargeText => Theme.of(this).textTheme.displaySmall;
@@ -38,6 +41,33 @@ extension BuildContextExtensions on BuildContext {
           ],
         ),
       ),
+    );
+  }
+
+  Future<ConfirmationDialogResult> showConfirmationDialog({
+    required String message,
+    String? title,
+    bool barrierDismissible = true,
+  }) async {
+    final dialogResult = await showAdaptiveDialog<ConfirmationDialogResult?>(
+      context: this,
+      barrierDismissible: true,
+      builder: (context) => ConfirmationDialogWidget(
+        title: title ?? context.l10n.confirm,
+        message: message,
+      ),
+    );
+    return dialogResult ?? ConfirmationDialogResult.cancel;
+  }
+
+  Future<void> openThemePicker() async {
+    await showModalBottomSheet<void>(
+      context: this,
+      barrierColor: Colors.black.withOpacity(0.3),
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return const ThemePickerWidget();
+      },
     );
   }
 }

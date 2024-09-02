@@ -3,23 +3,28 @@ import 'package:mocktail/mocktail.dart';
 import 'package:personal_expense_tracker/dtos/login_request_dto.dart';
 import 'package:personal_expense_tracker/dtos/login_response_dto.dart';
 import 'package:personal_expense_tracker/dtos/signup_request_dto.dart';
-import 'package:personal_expense_tracker/enums/authentication_status.dart';
 import 'package:personal_expense_tracker/exceptions/login_exception.dart';
 import 'package:personal_expense_tracker/exceptions/signup_exception.dart';
 import 'package:personal_expense_tracker/repositories/authentication_repository.dart';
 import 'package:personal_expense_tracker/services/authentication_service.dart';
+import 'package:personal_expense_tracker/services/token_storage_service.dart';
 
 class MockAuthenticationService extends Mock implements AuthenticationService {}
+
+class MockTokenStorageService extends Mock implements TokenStorageService {}
 
 void main() {
   group('Authentication Repository', () {
     late AuthenticationRepository authenticationRepository;
     late MockAuthenticationService mockAuthenticationService;
+    late MockTokenStorageService mockTokenStorageService;
 
     setUp(() {
       mockAuthenticationService = MockAuthenticationService();
+      mockTokenStorageService = MockTokenStorageService();
       authenticationRepository = AuthenticationRepository(
         authenticationService: mockAuthenticationService,
+        tokenStorageService: mockTokenStorageService,
       );
     });
 
@@ -47,6 +52,13 @@ void main() {
               'expiresIn': 'expiresIn',
             },
           );
+        });
+        when(
+          () => mockTokenStorageService.saveToken(
+            accessToken: 'accessToken',
+          ),
+        ).thenAnswer((_) async {
+          return;
         });
 
         expect(

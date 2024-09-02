@@ -99,7 +99,7 @@ void main() {
                 'id': '1',
                 'category': 'transport',
                 'nameOfItem': 'transport',
-                'estimatedAmount': 500.0,
+                'estimatedAmount': '500.0',
               },
             );
           });
@@ -113,7 +113,7 @@ void main() {
               'id': '1',
               'category': 'transport',
               'nameOfItem': 'transport',
-              'estimatedAmount': 500.0,
+              'estimatedAmount': '500.0',
             }),
           );
         },
@@ -169,7 +169,7 @@ void main() {
                 'id': '1',
                 'category': 'transport',
                 'nameOfItem': 'transport',
-                'estimatedAmount': 500.0,
+                'estimatedAmount': '500.0',
               },
             );
           });
@@ -182,7 +182,7 @@ void main() {
               'id': '1',
               'category': 'transport',
               'nameOfItem': 'transport',
-              'estimatedAmount': 500.0,
+              'estimatedAmount': '500.0',
             }),
           );
         },
@@ -241,13 +241,13 @@ void main() {
                     'id': '1',
                     'category': 'transport',
                     'nameOfItem': 'transport',
-                    'estimatedAmount': 500.0,
+                    'estimatedAmount': '500.0',
                   },
                   {
                     'id': '2',
                     'category': 'transport',
                     'nameOfItem': 'transport',
-                    'estimatedAmount': 500.0,
+                    'estimatedAmount': '500.0',
                   },
                 ],
               },
@@ -260,14 +260,14 @@ void main() {
                 'id': '1',
                 'category': 'transport',
                 'nameOfItem': 'transport',
-                'estimatedAmount': 500.0,
+                'estimatedAmount': '500.0',
               },
             ),
             ExpenditureResponseDto.fromMap(const {
               'id': '2',
               'category': 'transport',
               'nameOfItem': 'transport',
-              'estimatedAmount': 500.0,
+              'estimatedAmount': '500.0',
             }),
           ]);
         },

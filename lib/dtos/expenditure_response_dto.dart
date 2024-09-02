@@ -15,7 +15,8 @@ class ExpenditureResponseDto extends Equatable {
       id: (map['id'] ?? '') as String,
       category: (map['category'] ?? '') as String,
       nameOfItem: (map['nameOfItem'] ?? '') as String,
-      estimatedAmount: (map['estimatedAmount'] ?? 0.0) as double,
+      estimatedAmount:
+          double.tryParse((map['estimatedAmount'] ?? '0.0') as String) ?? 0.0,
     );
   }
 

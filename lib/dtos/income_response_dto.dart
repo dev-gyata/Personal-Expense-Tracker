@@ -13,7 +13,7 @@ class IncomeResponseDto extends Equatable {
     return IncomeResponseDto(
       id: (map['id'] ?? '') as String,
       nameOfRevenue: (map['nameOfRevenue'] ?? '') as String,
-      amount: (map['amount'] ?? 0.0) as double,
+      amount: double.tryParse((map['amount'] ?? '0.0').toString()) ?? 0.0,
     );
   }
 
