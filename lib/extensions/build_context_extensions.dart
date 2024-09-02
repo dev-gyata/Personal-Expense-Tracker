@@ -64,6 +64,21 @@ extension BuildContextExtensions on BuildContext {
     return dialogResult ?? ConfirmationDialogResult.cancel;
   }
 
+  Future<void> showGeneralDialog({
+    required String message,
+    String? title,
+    bool barrierDismissible = true,
+  }) async {
+    return showAdaptiveDialog<void>(
+      context: this,
+      barrierDismissible: true,
+      builder: (context) => GeneralDialogWidget(
+        title: title ?? context.l10n.confirm,
+        message: message,
+      ),
+    );
+  }
+
   Future<void> openThemePicker() async {
     await showModalBottomSheet<void>(
       context: this,

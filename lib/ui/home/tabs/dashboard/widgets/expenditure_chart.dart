@@ -2,13 +2,14 @@ import 'package:collection/collection.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:personal_expense_tracker/models/category_model.dart';
 import 'package:personal_expense_tracker/models/expenditure_model.dart';
 import 'package:personal_expense_tracker/ui/home/tabs/dashboard/widgets/chart_indicator.dart';
 import 'package:personal_expense_tracker/utils/colors/colors_generator.dart';
 
 class ExpenditureChart extends HookWidget {
   const ExpenditureChart({required this.expenditures, super.key});
-  final List<ExpenditureModel> expenditures;
+  final List<CategoryModel> expenditures;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class ExpenditureChart extends HookWidget {
             children: expenditures.mapIndexed((index, currenExpenditure) {
               return ChartIndicator(
                 color: generatedColors[index],
-                text: currenExpenditure.category,
+                text: currenExpenditure.name,
                 isSquare: false,
                 size: touchedIndex.value == index ? 18 : 16,
               );
@@ -83,7 +84,7 @@ class ExpenditureChart extends HookWidget {
             currentExpenditure.calculatePercentage(expenditures: expenditures);
         return PieChartSectionData(
           color: generatedColors[index],
-          value: currentExpenditure.estimatedAmount,
+          value: currentExpenditure.amount,
           title: '${currentIncomePercentage.toStringAsFixed(2)}%',
           radius: 80,
           titlePositionPercentageOffset: 0.55,

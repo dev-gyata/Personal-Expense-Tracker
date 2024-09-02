@@ -13,7 +13,7 @@ class AmountModel extends FormzInput<String, AmountValidationError> {
   @override
   AmountValidationError? validator(String value) {
     if (_amountRegex.hasMatch(value)) {
-      if (int.tryParse(value) == 0) {
+      if (double.tryParse(value) == 0) {
         return AmountValidationError.invalid;
       }
       return null;

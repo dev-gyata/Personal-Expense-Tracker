@@ -5,12 +5,16 @@ import 'package:personal_expense_tracker/l10n/l10n.dart';
 enum AppTextfieldType {
   email,
   password,
+  amount,
   text;
 
   TextInputType get getTextInputType {
     return switch (this) {
       AppTextfieldType.email => TextInputType.emailAddress,
       AppTextfieldType.password => TextInputType.visiblePassword,
+      AppTextfieldType.amount => const TextInputType.numberWithOptions(
+          decimal: true,
+        ),
       _ => TextInputType.text,
     };
   }
@@ -50,6 +54,14 @@ class AppTextfield extends HookWidget {
     this.errorText,
     this.prefixIcon,
   }) : type = AppTextfieldType.password;
+  const AppTextfield.amount({
+    super.key,
+    this.onChanged,
+    this.hintText,
+    this.label,
+    this.errorText,
+    this.prefixIcon,
+  }) : type = AppTextfieldType.amount;
   const AppTextfield.text({
     super.key,
     this.onChanged,
@@ -97,6 +109,7 @@ class AppTextfield extends HookWidget {
             return switch (type) {
               AppTextfieldType.email => const Icon(Icons.email),
               AppTextfieldType.password => const Icon(Icons.key),
+              AppTextfieldType.amount => const Icon(Icons.attach_money_sharp),
               _ => prefixIcon ?? const SizedBox.shrink(),
             };
           },

@@ -8,10 +8,15 @@ import 'package:personal_expense_tracker/global_cubits/theme_cubit/'
 import 'package:personal_expense_tracker/l10n/l10n.dart';
 import 'package:personal_expense_tracker/repositories/'
     'authentication_repository.dart';
+import 'package:personal_expense_tracker/repositories/'
+    'expenditure_repository.dart';
+import 'package:personal_expense_tracker/repositories/income_repository.dart';
 import 'package:personal_expense_tracker/router/app_router.dart';
 import 'package:personal_expense_tracker/router/app_router.gr.dart';
 import 'package:personal_expense_tracker/service_locator/service_locator.dart';
 import 'package:personal_expense_tracker/services/authentication_service.dart';
+import 'package:personal_expense_tracker/services/expenditure_service.dart';
+import 'package:personal_expense_tracker/services/income_service.dart';
 import 'package:personal_expense_tracker/services/token_storage_service.dart';
 
 class App extends StatelessWidget {
@@ -27,6 +32,16 @@ class App extends StatelessWidget {
           create: (context) => AuthenticationRepository(
             authenticationService: sl<AuthenticationService>(),
             tokenStorageService: sl<TokenStorageService>(),
+          ),
+        ),
+        RepositoryProvider(
+          create: (context) => ExpenditureRepository(
+            expenditureService: sl<ExpenditureService>(),
+          ),
+        ),
+        RepositoryProvider(
+          create: (context) => IncomeRepository(
+            incomeService: sl<IncomeService>(),
           ),
         ),
       ],
@@ -47,7 +62,7 @@ class App extends StatelessWidget {
           listener: (context, state) {
             if (state.status == AuthStatus.authenticated) {
               _appRouter.replaceAll([
-                const HomeRoute(),
+                HomeRoute(),
               ]);
             }
             if (state.status == AuthStatus.unauthenticated) {

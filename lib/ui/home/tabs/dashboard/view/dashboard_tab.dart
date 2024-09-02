@@ -7,6 +7,7 @@ import 'package:personal_expense_tracker/ui/home/cubits/expenditure_cubit/expend
 import 'package:personal_expense_tracker/ui/home/cubits/income_cubit/income_cubit.dart';
 import 'package:personal_expense_tracker/ui/home/tabs/dashboard/widgets/expenditure_chart.dart';
 import 'package:personal_expense_tracker/ui/home/tabs/dashboard/widgets/income_chart.dart';
+import 'package:personal_expense_tracker/utils/expenditure_utils/expenditure_utils.dart';
 
 @RoutePage()
 class DashboardTab extends StatelessWidget {
@@ -61,27 +62,12 @@ class _ExpenditureSection extends StatelessWidget {
         Builder(
           builder: (context) {
             // Group expenditures by category
-
-            final expendituresByCategoryMap =
-                expenditureStatus.expenditures.groupListsBy((e) => e.category);
-            final expenditureByCategory =
-                expendituresByCategoryMap.entries.map((e) {
-              final category = e.key;
-              final expenditures = e.value;
-              final totalAmountInCategory = expenditures.fold(
-                0.toDouble(),
-                (previousValue, element) =>
-                    previousValue + element.estimatedAmount,
-              );
-              return ExpenditureModel(
-                id: e.key,
-                category: category,
-                nameOfItem: category,
-                estimatedAmount: totalAmountInCategory,
-              );
-            });
+            final expendituresByCategory =
+                ExpenditureUtils.foldExpendituresIntoCategories(
+              expenditureStatus.expenditures,
+            );
             return ExpenditureChart(
-              expenditures: expenditureByCategory.toList(),
+              expenditures: expendituresByCategory.toList(),
             );
           },
         ),

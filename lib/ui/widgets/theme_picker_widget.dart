@@ -62,20 +62,6 @@ class ThemePickerWidget extends StatelessWidget {
                           trailing: currentTheme == option
                               ? const Icon(Icons.check_rounded)
                               : null,
-                          // leading: Radio<ThemeMode>(
-                          //   visualDensity: const VisualDensity(
-                          //     horizontal: -4,
-                          //   ),
-                          //   value: option,
-                          //   groupValue: currentTheme,
-                          //   onChanged: (ThemeMode? value) {
-                          //     if (value != null) {
-                          //       context.read<ThemeCubit>().toggleThemeMode(
-                          //             themeMode: value,
-                          //           );
-                          //     }
-                          //   },
-                          // ),
                         );
                       },
                     ),
