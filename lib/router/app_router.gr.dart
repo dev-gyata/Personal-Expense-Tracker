@@ -9,15 +9,16 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i7;
-import 'package:personal_expense_tracker/home/tabs/dashboard/view/dashboard_tab.dart'
+import 'package:personal_expense_tracker/ui/home/tabs/dashboard/view/dashboard_tab.dart'
     as _i1;
-import 'package:personal_expense_tracker/home/tabs/expenditure/view/expenditure_tab.dart'
+import 'package:personal_expense_tracker/ui/home/tabs/expenditure/view/expenditure_tab.dart'
     as _i2;
-import 'package:personal_expense_tracker/home/tabs/settings/view/settings_tab.dart'
+import 'package:personal_expense_tracker/ui/home/tabs/settings/view/settings_tab.dart'
     as _i5;
-import 'package:personal_expense_tracker/home/view/home_page.dart' as _i3;
-import 'package:personal_expense_tracker/login/view/login_page.dart' as _i4;
-import 'package:personal_expense_tracker/sign_up/view/sign_up_page.dart' as _i6;
+import 'package:personal_expense_tracker/ui/home/view/home_page.dart' as _i3;
+import 'package:personal_expense_tracker/ui/login/view/login_page.dart' as _i4;
+import 'package:personal_expense_tracker/ui/sign_up/view/sign_up_page.dart'
+    as _i6;
 
 /// generated route for
 /// [_i1.DashboardTab]

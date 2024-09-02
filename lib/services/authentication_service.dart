@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:personal_expense_tracker/config/config.dart';
 import 'package:personal_expense_tracker/dtos/login_request_dto.dart';
 import 'package:personal_expense_tracker/dtos/login_response_dto.dart';
 import 'package:personal_expense_tracker/dtos/signup_request_dto.dart';
@@ -18,7 +19,7 @@ class AuthenticationService {
   }) async {
     try {
       final response = await _dio.post(
-        '/auth/login',
+        AppEndpoints.loginEndpoint,
         data: loginRequestDto.toJson(),
       );
       return LoginResponseDto.fromMap(response.data as Map<String, dynamic>);
@@ -31,7 +32,7 @@ class AuthenticationService {
       throw LoginException(
         message: 'Something went wrong while logging in',
       );
-    } on Exception catch (e) {
+    } on Exception {
       throw LoginException(
         message: 'Something went wrong while logging in',
       );
@@ -43,7 +44,7 @@ class AuthenticationService {
   }) async {
     try {
       await _dio.post(
-        '/auth/signup',
+        AppEndpoints.signupEndpoint,
         data: signupRequestDto.toJson(),
       );
       return;
@@ -56,7 +57,7 @@ class AuthenticationService {
       throw SignupException(
         message: 'Something went wrong while signing up',
       );
-    } on Exception catch (e) {
+    } on Exception {
       throw SignupException(
         message: 'Something went wrong while signing up',
       );
@@ -68,7 +69,7 @@ class AuthenticationService {
   }) async {
     try {
       final response = await _dio.get(
-        '/auth/user/$userId/profile',
+        AppEndpoints.userProfileEndpoint.replaceAll('*', userId),
       );
       return UserResponseDto.fromMap(response.data as Map<String, dynamic>);
     } catch (_) {

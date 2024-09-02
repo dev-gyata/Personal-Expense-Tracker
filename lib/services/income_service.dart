@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:personal_expense_tracker/config/config.dart';
 import 'package:personal_expense_tracker/dtos/dtos.dart';
 import 'package:personal_expense_tracker/exceptions/api_exception.dart';
 
@@ -12,7 +13,7 @@ class IncomeService {
   Future<List<IncomeResponseDto>> getUserIncome() async {
     try {
       final response = await _dio.get(
-        '/user/income',
+        AppEndpoints.incomeEndpoint,
       );
       // ignore: avoid_dynamic_calls
       return (response.data['data'] as List)
@@ -30,7 +31,7 @@ class IncomeService {
   }) async {
     try {
       final response = await _dio.get(
-        '/user/income/$incomeId',
+        AppEndpoints.incomeByIdEndpoint.replaceAll('*', incomeId),
       );
       return IncomeResponseDto.fromMap(response.data as Map<String, dynamic>);
     } on DioException catch (e) {
@@ -54,11 +55,12 @@ class IncomeService {
     required IncomeCreationRequestDto incomeRequestDto,
   }) async {
     try {
+      // ignore: inference_failure_on_function_invocation
       await _dio.post(
-        '/user/income',
+        AppEndpoints.incomeEndpoint,
         data: incomeRequestDto.toJson(),
       );
-    } on DioException catch (e) {
+    } on DioException {
       throw ApiException(
         message: 'Unable to create user income',
       );
@@ -69,8 +71,9 @@ class IncomeService {
     required String incomeId,
   }) async {
     try {
+      // ignore: inference_failure_on_function_invocation
       final deletedIncomeResponse = await _dio.delete(
-        '/user/income/$incomeId',
+        AppEndpoints.incomeByIdEndpoint.replaceAll('*', incomeId),
       );
       return IncomeResponseDto.fromMap(
         deletedIncomeResponse.data as Map<String, dynamic>,

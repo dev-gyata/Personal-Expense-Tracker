@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:personal_expense_tracker/config/config.dart';
 import 'package:personal_expense_tracker/dtos/dtos.dart';
 import 'package:personal_expense_tracker/exceptions/api_exception.dart';
 
@@ -12,7 +13,7 @@ class ExpenditureService {
   Future<List<ExpenditureResponseDto>> getUserExpenditure() async {
     try {
       final response = await _dio.get(
-        '/user/expenditure',
+        AppEndpoints.expenditureEndpoint,
       );
       // ignore: avoid_dynamic_calls
       return (response.data['data'] as List)
@@ -30,7 +31,7 @@ class ExpenditureService {
   }) async {
     try {
       final response = await _dio.get(
-        '/user/expenditure/$expenditureId',
+        AppEndpoints.expenditureByIdEndpoint.replaceAll('*', expenditureId),
       );
       return ExpenditureResponseDto.fromMap(
         response.data as Map<String, dynamic>,
@@ -57,10 +58,10 @@ class ExpenditureService {
   }) async {
     try {
       await _dio.post(
-        '/user/expenditure',
+        AppEndpoints.expenditureEndpoint,
         data: creationRequestDto.toJson(),
       );
-    } on DioException catch (e) {
+    } on DioException {
       throw ApiException(
         message: 'Unable to create user Expenditure',
       );
@@ -72,7 +73,7 @@ class ExpenditureService {
   }) async {
     try {
       final deletedExpenditureResponse = await _dio.delete(
-        '/user/expenditure/$expenditureId',
+        AppEndpoints.expenditureByIdEndpoint.replaceAll('*', expenditureId),
       );
       return ExpenditureResponseDto.fromMap(
         deletedExpenditureResponse.data as Map<String, dynamic>,

@@ -13,7 +13,8 @@ class ExpenditureCreationRequestDto extends Equatable {
     return ExpenditureCreationRequestDto(
       category: (map['category'] ?? '') as String,
       nameOfItem: (map['nameOfItem'] ?? '') as String,
-      estimatedAmount: (map['estimatedAmount'] ?? 0.0) as double,
+      estimatedAmount:
+          double.tryParse(map['estimatedAmount']?.toString() ?? '0.0') ?? 0.0,
     );
   }
 
