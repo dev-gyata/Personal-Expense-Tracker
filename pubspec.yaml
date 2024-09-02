@@ -23,7 +23,6 @@ dependencies:
     sdk: flutter
   flutter_secure_storage: ^4.2.1
   formz: ^0.7.0
-  freezed: ^2.5.7
   gap: ^3.0.1
   get_it: ^7.7.0
   google_fonts: ^6.2.1
