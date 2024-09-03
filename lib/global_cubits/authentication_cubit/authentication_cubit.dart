@@ -69,6 +69,8 @@ class AuthenticationCubit extends HydratedCubit<AuthenticationState> {
         'user': state.user.toMap(),
       };
     }
-    return null;
+    return {
+      'rememberMe': state.rememberMe,
+    };
   }
 }

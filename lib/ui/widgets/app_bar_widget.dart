@@ -4,15 +4,14 @@ import 'package:gap/gap.dart';
 import 'package:personal_expense_tracker/config/config.dart';
 import 'package:personal_expense_tracker/extensions/extensions.dart';
 import 'package:personal_expense_tracker/global_cubits/authentication_cubit/authentication_cubit.dart';
-import 'package:personal_expense_tracker/l10n/l10n.dart';
 import 'package:personal_expense_tracker/resources/resources.dart';
+import 'package:personal_expense_tracker/utils/date_utils/date_utils.dart';
 
 class HomePageAppBar extends StatelessWidget implements PreferredSizeWidget {
   const HomePageAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
     return Stack(
       children: [
         const Positioned.fill(
@@ -54,11 +53,18 @@ class HomePageAppBar extends StatelessWidget implements PreferredSizeWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      l10n.goodMorning,
-                      style: context.smallText?.copyWith(
-                        color: AppColors.kWhiteColor,
-                      ),
+                    Builder(
+                      builder: (context) {
+                        final currentTime = CurrentTimeUtils.getCurrentTime(
+                          date: DateTime.now(),
+                        );
+                        return Text(
+                          currentTime.formatTime(context),
+                          style: context.smallText?.copyWith(
+                            color: AppColors.kWhiteColor,
+                          ),
+                        );
+                      },
                     ),
                     Builder(
                       builder: (context) {

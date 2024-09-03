@@ -36,13 +36,14 @@ class SignUpView extends StatelessWidget {
     final l10n = context.l10n;
     return BlocListener<SignUpCubit, SignUpState>(
       listenWhen: (previous, current) => previous.status != current.status,
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state.status == FormzSubmissionStatus.failure &&
             state.errorMessage != null) {
           context.showErrorSnackbar(state.errorMessage!);
         }
         if (state.status == FormzSubmissionStatus.success) {
           context.showSuccessSnackbar(l10n.signupSuccess);
+          await context.navigateTo(const LoginRoute());
         }
       },
       child: UnfocusWidget(

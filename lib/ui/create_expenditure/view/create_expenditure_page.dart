@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -51,8 +53,11 @@ class CreateExpenditureView extends StatelessWidget {
           );
         }
         if (state.apiStatus.isSuccess) {
+          log('message');
           onExpenseCreated?.call();
-          return context.showGeneralDialog(message: l10n.expenditureCreated);
+          log('message $onExpenseCreated');
+          await context.showGeneralDialog(message: l10n.expenditureCreated);
+          return context.back();
         }
       },
       child: UnfocusWidget(

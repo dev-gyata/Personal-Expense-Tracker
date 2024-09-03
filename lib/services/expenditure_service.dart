@@ -12,38 +12,6 @@ class ExpenditureService {
 
   Future<List<ExpenditureResponseDto>> getUserExpenditure() async {
     try {
-      return <ExpenditureResponseDto>[
-        ExpenditureResponseDto.fromMap(const {
-          'id': '1',
-          'category': 'transport',
-          'nameOfItem': 'transport',
-          'estimatedAmount': '500.0',
-        }),
-        ExpenditureResponseDto.fromMap(const {
-          'id': '1',
-          'category': 'bills',
-          'nameOfItem': 'transport',
-          'estimatedAmount': '200.0',
-        }),
-        ExpenditureResponseDto.fromMap(const {
-          'id': '1',
-          'category': 'rent',
-          'nameOfItem': 'transport',
-          'estimatedAmount': '100.0',
-        }),
-        ExpenditureResponseDto.fromMap(const {
-          'id': '1',
-          'category': 'party',
-          'nameOfItem': 'transport',
-          'estimatedAmount': '100.0',
-        }),
-        ExpenditureResponseDto.fromMap(const {
-          'id': '1',
-          'category': 'movies',
-          'nameOfItem': 'transport',
-          'estimatedAmount': '100.0',
-        }),
-      ];
       final response = await _dio.get(
         AppEndpoints.expenditureEndpoint,
       );

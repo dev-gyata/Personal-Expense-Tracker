@@ -14,6 +14,7 @@ import 'package:personal_expense_tracker/ui/home/tabs/dashboard/widgets'
     '/income_chart.dart';
 import 'package:personal_expense_tracker/ui/home/tabs/dashboard/widgets'
     '/sumary_card_widget.dart';
+import 'package:personal_expense_tracker/ui/widgets/empty_state_widget.dart';
 import 'package:personal_expense_tracker/utils'
     '/expenditure_utils/expenditure_utils.dart';
 
@@ -59,9 +60,7 @@ class DashboardChartsSectionWidget extends StatelessWidget {
                       ExpenditureUtils.foldExpendituresIntoCategories(
                     expenditureStatus.expenditures,
                   );
-                  if (expendituresByCategory.isEmpty) {
-                    return const SizedBox.shrink();
-                  }
+
                   return DecoratedBox(
                     decoration: BoxDecoration(
                       color: context.currentBrightness == Brightness.dark
@@ -74,9 +73,15 @@ class DashboardChartsSectionWidget extends StatelessWidget {
                         horizontal: 20,
                         vertical: 8,
                       ),
-                      child: ExpenditureChart(
-                        expenditures: expendituresByCategory.toList(),
-                      ),
+                      child: expendituresByCategory.isEmpty
+                          ? EmptyStateWidget(
+                              imageHeight: 100,
+                              imageWidth: 200,
+                              message: l10n.chartCantBeGeneratedForExpenditure,
+                            )
+                          : ExpenditureChart(
+                              expenditures: expendituresByCategory.toList(),
+                            ),
                     ),
                   );
                 },
@@ -103,9 +108,15 @@ class DashboardChartsSectionWidget extends StatelessWidget {
                           horizontal: 20,
                           vertical: 8,
                         ),
-                        child: IncomeChart(
-                          income: incomeState.income,
-                        ),
+                        child: incomeState.income.isEmpty
+                            ? EmptyStateWidget(
+                                imageHeight: 100,
+                                imageWidth: 200,
+                                message: l10n.chartCantBeGeneratedForIncome,
+                              )
+                            : IncomeChart(
+                                income: incomeState.income,
+                              ),
                       ),
                     );
                   }

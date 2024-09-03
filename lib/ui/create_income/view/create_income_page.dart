@@ -49,7 +49,8 @@ class CreateIncomeView extends StatelessWidget {
         }
         if (state.apiStatus.isSuccess) {
           onIncomeCreated?.call();
-          return context.showGeneralDialog(message: l10n.incomeCreated);
+          await context.showGeneralDialog(message: l10n.incomeCreated);
+          return context.back();
         }
       },
       child: UnfocusWidget(

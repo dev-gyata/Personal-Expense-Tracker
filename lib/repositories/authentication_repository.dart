@@ -31,7 +31,8 @@ class AuthenticationRepository {
     await _tokenStorageService.saveToken(
       accessToken: loginResponse.accessToken,
     );
-    // Get user details here
+    // Get user details here when endpoint is ready
+
     _authController.add(
       AuthenticationStatusAuthenticated(
         rememberMe: rememberMe,

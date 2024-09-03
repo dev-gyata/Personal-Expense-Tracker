@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
+import 'package:gap/gap.dart';
 import 'package:personal_expense_tracker/l10n/l10n.dart';
 import 'package:personal_expense_tracker/repositories/'
     'expenditure_repository.dart';
@@ -48,16 +49,6 @@ class HomePage extends StatelessWidget {
         builder: (context, child) {
           final tabsRouter = AutoTabsRouter.of(context);
           return Scaffold(
-            // appBar: AppBar(
-            //   title: Text(
-            //     switch (tabsRouter.activeIndex) {
-            //       0 => l10n.dashboard,
-            //       1 => l10n.expenditure,
-            //       2 => l10n.settings,
-            //       _ => '',
-            //     },
-            //   ),
-            // ),
             appBar: switch (tabsRouter.activeIndex) {
               0 => const HomePageAppBar(),
               1 => DefaultAppBar(title: l10n.expenditure),
@@ -73,6 +64,7 @@ class HomePage extends StatelessWidget {
                   return const SizedBox.shrink();
                 }
                 return ExpandableFab(
+                  key: _expandableFabKey,
                   overlayStyle: const ExpandableFabOverlayStyle(
                     blur: 2,
                   ),
@@ -81,6 +73,7 @@ class HomePage extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: () {
+                            _expandableFabKey.currentState?.toggle();
                             context.navigateTo(
                               CreateExpenditureRoute(
                                 onExpenseCreated: context
@@ -88,11 +81,10 @@ class HomePage extends StatelessWidget {
                                     .onRefreshExpenditure,
                               ),
                             );
-                            // _expandableFabKey.currentState?.toggle();
                           },
-                          child: const Text('Add Expenditure'),
+                          child: Text(l10n.addExpenditure),
                         ),
-                        const SizedBox(width: 20),
+                        const Gap(10),
                         FloatingActionButton.small(
                           heroTag: null,
                           child: const Icon(Icons.add),
@@ -109,33 +101,35 @@ class HomePage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        context.navigateTo(
-                          CreateIncomeRoute(
-                            onIncomeCreated:
-                                context.read<IncomeCubit>().onRefreshIncome,
-                          ),
-                        );
-                        _expandableFabKey.currentState?.toggle();
-                      },
-                      child: Row(
-                        children: [
-                          const Text('Add Revenue'),
-                          const SizedBox(width: 20),
-                          FloatingActionButton.small(
-                            heroTag: null,
-                            child: const Icon(Icons.add),
-                            onPressed: () {
-                              _expandableFabKey.currentState?.toggle();
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            _expandableFabKey.currentState?.toggle();
+                            context.navigateTo(
                               CreateIncomeRoute(
                                 onIncomeCreated:
                                     context.read<IncomeCubit>().onRefreshIncome,
-                              );
-                            },
-                          ),
-                        ],
-                      ),
+                              ),
+                            );
+                          },
+                          child: Text(l10n.addRevenue),
+                        ),
+                        const Gap(10),
+                        FloatingActionButton.small(
+                          heroTag: null,
+                          child: const Icon(Icons.add),
+                          onPressed: () {
+                            _expandableFabKey.currentState?.toggle();
+                            context.navigateTo(
+                              CreateIncomeRoute(
+                                onIncomeCreated:
+                                    context.read<IncomeCubit>().onRefreshIncome,
+                              ),
+                            );
+                          },
+                        ),
+                      ],
                     ),
                   ],
                 );

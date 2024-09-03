@@ -1,6 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
-
 import 'package:equatable/equatable.dart';
 
 class UserModel extends Equatable {
@@ -9,6 +6,14 @@ class UserModel extends Equatable {
     required this.email,
     required this.id,
   });
+
+  factory UserModel.fromMap(Map<String, dynamic> map) {
+    return UserModel(
+      name: (map['name'] ?? '') as String,
+      email: (map['email'] ?? '') as String,
+      id: (map['id'] ?? '') as String,
+    );
+  }
   const UserModel.empty() : this(name: '', email: '', id: '');
   final String name;
   final String email;
@@ -26,13 +31,5 @@ class UserModel extends Equatable {
       'email': email,
       'id': id,
     };
-  }
-
-  factory UserModel.fromMap(Map<String, dynamic> map) {
-    return UserModel(
-      name: (map['name'] ?? '') as String,
-      email: (map['email'] ?? '') as String,
-      id: (map['id'] ?? '') as String,
-    );
   }
 }

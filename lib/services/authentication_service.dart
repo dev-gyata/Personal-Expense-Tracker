@@ -18,7 +18,6 @@ class AuthenticationService {
     required LoginRequestDto loginRequestDto,
   }) async {
     try {
-      return LoginResponseDto.fromMap(const {});
       final response = await _dio.post(
         AppEndpoints.loginEndpoint,
         data: loginRequestDto.toJson(),
