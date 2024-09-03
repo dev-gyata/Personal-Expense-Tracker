@@ -26,8 +26,8 @@ class SettingsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return ListView(
+      padding: const EdgeInsets.symmetric(vertical: 5),
       children: [
-        const Divider(),
         ListTile(
           leading: const Icon(Icons.palette),
           title: Text(l10n.theme),
@@ -43,7 +43,9 @@ class SettingsTab extends StatelessWidget {
             context.openThemePicker();
           },
         ),
-        const Divider(),
+        const Divider(
+          height: 0,
+        ),
         ListTile(
           leading: const Icon(Icons.logout),
           title: Text(l10n.logout),

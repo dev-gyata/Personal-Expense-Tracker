@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:personal_expense_tracker/config/config.dart';
 import 'package:personal_expense_tracker/l10n/l10n.dart';
 import 'package:personal_expense_tracker/ui/widgets/app_dialog.dart';
@@ -10,6 +11,14 @@ extension BuildContextExtensions on BuildContext {
   TextStyle? get largeText => Theme.of(this).textTheme.bodyLarge;
   TextStyle? get mediumText => Theme.of(this).textTheme.bodyMedium;
   TextStyle? get smallText => Theme.of(this).textTheme.bodySmall;
+
+  double get screenWidth => MediaQuery.sizeOf(this).width;
+
+  Brightness get currentBrightness => Theme.of(this).brightness;
+
+  TextStyle? get appTitleText =>
+      Theme.of(this).appBarTheme.titleTextStyle ??
+      GoogleFonts.interTextTheme().titleLarge;
 
   double? get deviceWidth => MediaQuery.sizeOf(this).width;
 

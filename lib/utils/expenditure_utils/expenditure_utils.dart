@@ -25,4 +25,45 @@ class ExpenditureUtils {
     });
     return expendituresByCategory.toList();
   }
+
+  static double calculateTotalIncome({
+    required List<ExpenditureModel> expenditures,
+  }) {
+    return expenditures.fold(
+      0.toDouble(),
+      (previousValue, element) => previousValue + element.estimatedAmount,
+    );
+  }
+
+  static ExpenditureModel? getHighest({
+    required List<ExpenditureModel> expenditures,
+  }) {
+    if (expenditures.isEmpty) {
+      return null;
+    }
+    ExpenditureModel? highestExpenditure;
+    for (final expenditure in expenditures) {
+      if (highestExpenditure == null ||
+          expenditure.estimatedAmount > highestExpenditure.estimatedAmount) {
+        highestExpenditure = expenditure;
+      }
+    }
+    return highestExpenditure;
+  }
+
+  static CategoryModel? getHighestCategory({
+    required List<ExpenditureModel> expenditures,
+  }) {
+    if (expenditures.isEmpty) {
+      return null;
+    }
+    final categories = foldExpendituresIntoCategories(expenditures);
+    CategoryModel? highestCategory;
+    for (final category in categories) {
+      if (highestCategory == null || category.amount > highestCategory.amount) {
+        highestCategory = category;
+      }
+    }
+    return highestCategory;
+  }
 }

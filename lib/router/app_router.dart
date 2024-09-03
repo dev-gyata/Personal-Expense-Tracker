@@ -16,6 +16,9 @@ class AppRouter extends RootStackRouter {
           page: CreateIncomeRoute.page,
         ),
         AutoRoute(
+          page: ExpenditureItemsRoute.page,
+        ),
+        AutoRoute(
           page: HomeRoute.page,
           children: [
             AutoRoute(page: DashboardRoute.page),

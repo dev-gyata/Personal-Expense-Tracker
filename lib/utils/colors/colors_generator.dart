@@ -10,6 +10,6 @@ class ColorGenerator {
     return List<Color>.generate(
       totalColors,
       (index) => _indexToColor(index, totalColors),
-    );
+    ).reversed.toList();
   }
 }

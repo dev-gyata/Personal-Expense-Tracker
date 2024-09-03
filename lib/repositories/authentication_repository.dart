@@ -32,8 +32,8 @@ class AuthenticationRepository {
     );
     // Get user details here
     _authController.add(
-      const AuthenticationStatusAuthenticated(
-        user: UserModel(name: 'name', email: 'email', id: 'id'),
+      AuthenticationStatusAuthenticated(
+        user: UserModel(name: email, email: email, id: 'id'),
       ),
     );
     // return

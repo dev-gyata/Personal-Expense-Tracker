@@ -27,7 +27,7 @@ class IncomeCubit extends Cubit<IncomeState> {
     }
   }
 
-  Future<void> onDeleteExpenditure({
+  Future<String?> onDeleteExpenditure({
     required String id,
   }) async {
     try {
@@ -45,11 +45,13 @@ class IncomeCubit extends Cubit<IncomeState> {
           updatedIncome: existingIncome,
         ),
       );
-    } on ApiException catch (_) {
+    } on ApiException catch (e) {
       emit(
         state.isDeletionFailure(),
       );
+      return e.message;
     }
+    return null;
   }
 
   Future<String?> onRefreshIncome() async {

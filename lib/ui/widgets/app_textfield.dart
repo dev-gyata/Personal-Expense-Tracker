@@ -92,6 +92,7 @@ class AppTextfield extends HookWidget {
   Widget build(BuildContext context) {
     final obscureText = useState(type == AppTextfieldType.password);
     final labelToShow = label ?? type.getLabelText(context);
+    final currentBrightness = context.currentBrightness;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -112,7 +113,9 @@ class AppTextfield extends HookWidget {
         DecoratedBox(
           decoration: BoxDecoration(
             // color: AppColors.kGreyColor,
-            color: AppColors.kGhostWhite,
+            color: currentBrightness == Brightness.light
+                ? AppColors.kGhostWhite
+                : null,
             boxShadow: const [
               BoxShadow(
                 offset: Offset(0, 1),

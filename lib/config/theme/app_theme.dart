@@ -10,6 +10,22 @@ abstract class AppTheme {
         useMaterial3: true,
         primaryTextTheme: GoogleFonts.interTextTheme(),
         textTheme: GoogleFonts.interTextTheme(),
+      ).copyWith(
+        actionIconTheme: ActionIconThemeData(
+          backButtonIconBuilder: (context) {
+            return const IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios_new,
+                color: Colors.white,
+              ),
+              style: ButtonStyle(
+                shape: WidgetStatePropertyAll(CircleBorder()),
+                backgroundColor: WidgetStatePropertyAll(AppColors.kNiagara),
+              ),
+              onPressed: null,
+            );
+          },
+        ),
       );
   static ThemeData get darkTheme => FlexThemeData.dark(
         scheme: FlexScheme.custom,
@@ -17,5 +33,21 @@ abstract class AppTheme {
         useMaterial3: true,
         primaryTextTheme: GoogleFonts.interTextTheme(),
         textTheme: GoogleFonts.interTextTheme(),
+      ).copyWith(
+        actionIconTheme: ActionIconThemeData(
+          backButtonIconBuilder: (context) {
+            return const IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios_new,
+                color: Colors.white,
+              ),
+              style: ButtonStyle(
+                shape: WidgetStatePropertyAll(CircleBorder()),
+                backgroundColor: WidgetStatePropertyAll(AppColors.kNiagara),
+              ),
+              onPressed: null,
+            );
+          },
+        ),
       );
 }

@@ -6,8 +6,10 @@ import 'package:personal_expense_tracker/extensions/extensions.dart';
 import 'package:personal_expense_tracker/l10n/l10n.dart';
 import 'package:personal_expense_tracker/repositories/income_repository.dart';
 import 'package:personal_expense_tracker/ui/create_income/cubit/create_income_cubit.dart';
+import 'package:personal_expense_tracker/ui/widgets/app_bar_widget.dart';
 import 'package:personal_expense_tracker/ui/widgets/app_button.dart';
 import 'package:personal_expense_tracker/ui/widgets/app_textfield.dart';
+import 'package:personal_expense_tracker/ui/widgets/unfocus_widget.dart';
 
 @RoutePage()
 class CreateIncomePage extends StatelessWidget {
@@ -50,68 +52,84 @@ class CreateIncomeView extends StatelessWidget {
           return context.showGeneralDialog(message: l10n.incomeCreated);
         }
       },
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(l10n.createExpenditure),
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Builder(
-                builder: (context) {
-                  final isNameOfRevenue =
-                      context.select<CreateIncomeCubit, bool>(
-                    (cubit) => cubit.state.nameOfRevenue.displayError == null,
-                  );
-                  return AppTextfield.text(
-                    key: const Key('create_income_nameOfRevenue_textfield'),
-                    errorText:
-                        isNameOfRevenue ? null : l10n.nameOfRevenueOfError,
-                    hintText: l10n.enterYourRevenueName,
-                    label: l10n.nameOfRevenue,
-                    onChanged: context
-                        .read<CreateIncomeCubit>()
-                        .onNameOfRevenueChanged,
-                  );
-                },
-              ),
-              const Gap(20),
-              Builder(
-                builder: (context) {
-                  final isAmountValid = context.select<CreateIncomeCubit, bool>(
-                    (cubit) => cubit.state.amount.displayError == null,
-                  );
-                  return AppTextfield.text(
-                    key: const Key(
-                      'create_income_amount_textfield',
-                    ),
-                    errorText: isAmountValid ? null : l10n.amountError,
-                    hintText: l10n.enterYourRevenueAmount,
-                    label: l10n.amount,
-                    onChanged:
-                        context.read<CreateIncomeCubit>().onAmountChanged,
-                  );
-                },
-              ),
-            ],
+      child: UnfocusWidget(
+        child: Scaffold(
+          appBar: DefaultAppBar(
+            title: l10n.newRevenue,
           ),
-        ),
-        bottomNavigationBar: Builder(
-          builder: (context) {
-            final isFormValid = context.select<CreateIncomeCubit, bool>(
-              (cubit) => cubit.state.isFormValid,
-            );
-            final isFormLoading = context.select<CreateIncomeCubit, bool>(
-              (cubit) => cubit.state.apiStatus.isLoading,
-            );
-            return AppButton(
-              key: const Key('create_income_submit_button'),
-              isValid: isFormValid,
-              label: l10n.submit,
-              isLoading: isFormLoading,
-              onPressed: context.read<CreateIncomeCubit>().onSubmit,
-            );
-          },
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 10,
+              ),
+              child: Column(
+                children: [
+                  Builder(
+                    builder: (context) {
+                      final isNameOfRevenue =
+                          context.select<CreateIncomeCubit, bool>(
+                        (cubit) =>
+                            cubit.state.nameOfRevenue.displayError == null,
+                      );
+                      return AppTextfield.text(
+                        key: const Key('create_income_nameOfRevenue_textfield'),
+                        errorText:
+                            isNameOfRevenue ? null : l10n.nameOfRevenueOfError,
+                        hintText: l10n.enterYourRevenueName,
+                        label: l10n.nameOfRevenue,
+                        onChanged: context
+                            .read<CreateIncomeCubit>()
+                            .onNameOfRevenueChanged,
+                      );
+                    },
+                  ),
+                  const Gap(20),
+                  Builder(
+                    builder: (context) {
+                      final isAmountValid =
+                          context.select<CreateIncomeCubit, bool>(
+                        (cubit) => cubit.state.amount.displayError == null,
+                      );
+                      return AppTextfield.amount(
+                        key: const Key(
+                          'create_income_amount_textfield',
+                        ),
+                        errorText: isAmountValid ? null : l10n.amountError,
+                        hintText: l10n.enterYourRevenueAmount,
+                        label: l10n.amount,
+                        onChanged:
+                            context.read<CreateIncomeCubit>().onAmountChanged,
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+          bottomNavigationBar: Builder(
+            builder: (context) {
+              final isFormValid = context.select<CreateIncomeCubit, bool>(
+                (cubit) => cubit.state.isFormValid,
+              );
+              final isFormLoading = context.select<CreateIncomeCubit, bool>(
+                (cubit) => cubit.state.apiStatus.isLoading,
+              );
+              return Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
+                ),
+                child: AppButton(
+                  key: const Key('create_income_submit_button'),
+                  isValid: isFormValid,
+                  label: l10n.submit,
+                  isLoading: isFormLoading,
+                  onPressed: context.read<CreateIncomeCubit>().onSubmit,
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

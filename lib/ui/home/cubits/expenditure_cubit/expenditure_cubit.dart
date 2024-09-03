@@ -38,7 +38,7 @@ class ExpenditureCubit extends Cubit<ExpenditureState> {
     return null;
   }
 
-  Future<void> onDeleteExpenditure({
+  Future<String?> onDeleteExpenditure({
     required String id,
   }) async {
     try {
@@ -60,6 +60,8 @@ class ExpenditureCubit extends Cubit<ExpenditureState> {
       emit(
         state.isDeletionFailure(),
       );
+      return 'Something went wrong while deleting expenditure';
     }
+    return null;
   }
 }

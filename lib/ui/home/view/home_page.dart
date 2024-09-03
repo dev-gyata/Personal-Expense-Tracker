@@ -11,6 +11,7 @@ import 'package:personal_expense_tracker/ui/home/cubits/'
     'expenditure_cubit/expenditure_cubit.dart';
 import 'package:personal_expense_tracker/ui/home/cubits/'
     'income_cubit/income_cubit.dart';
+import 'package:personal_expense_tracker/ui/widgets/app_bar_widget.dart';
 
 @RoutePage()
 class HomePage extends StatelessWidget {
@@ -47,84 +48,98 @@ class HomePage extends StatelessWidget {
         builder: (context, child) {
           final tabsRouter = AutoTabsRouter.of(context);
           return Scaffold(
-            appBar: AppBar(
-              title: Text(
-                switch (tabsRouter.activeIndex) {
-                  0 => l10n.dashboard,
-                  1 => l10n.expenditure,
-                  2 => l10n.settings,
-                  _ => '',
-                },
-              ),
-            ),
+            // appBar: AppBar(
+            //   title: Text(
+            //     switch (tabsRouter.activeIndex) {
+            //       0 => l10n.dashboard,
+            //       1 => l10n.expenditure,
+            //       2 => l10n.settings,
+            //       _ => '',
+            //     },
+            //   ),
+            // ),
+            appBar: switch (tabsRouter.activeIndex) {
+              0 => const HomePageAppBar(),
+              1 => DefaultAppBar(title: l10n.expenditure),
+              2 => DefaultAppBar(title: l10n.settings),
+              _ => const DefaultAppBar(title: ''),
+            },
             body: child,
             floatingActionButtonLocation: ExpandableFab.location,
-            floatingActionButton: ExpandableFab(
-              overlayStyle: const ExpandableFabOverlayStyle(
-                blur: 2,
-              ),
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    _expandableFabKey.currentState?.toggle();
-                    context.navigateTo(
-                      CreateExpenditureRoute(
-                        onExpenseCreated: context
-                            .read<ExpenditureCubit>()
-                            .onRefreshExpenditure,
-                      ),
-                    );
-                  },
-                  child: Row(
-                    children: [
-                      const Text('Add Expenditure'),
-                      const SizedBox(width: 20),
-                      FloatingActionButton.small(
-                        heroTag: null,
-                        child: const Icon(Icons.add),
-                        onPressed: () {
-                          _expandableFabKey.currentState?.toggle();
-                          context.navigateTo(
-                            CreateExpenditureRoute(
-                              onExpenseCreated: context
-                                  .read<ExpenditureCubit>()
-                                  .onRefreshExpenditure,
-                            ),
-                          );
-                        },
-                      ),
-                    ],
+            floatingActionButton: Builder(
+              builder: (context) {
+                final tabsRouter = AutoTabsRouter.of(context, watch: true);
+                if (tabsRouter.activeIndex != 0) {
+                  return const SizedBox.shrink();
+                }
+                return ExpandableFab(
+                  overlayStyle: const ExpandableFabOverlayStyle(
+                    blur: 2,
                   ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    context.navigateTo(
-                      CreateIncomeRoute(
-                        onIncomeCreated:
-                            context.read<IncomeCubit>().onRefreshIncome,
-                      ),
-                    );
-                    _expandableFabKey.currentState?.toggle();
-                  },
-                  child: Row(
-                    children: [
-                      const Text('Add Revenue'),
-                      const SizedBox(width: 20),
-                      FloatingActionButton.small(
-                        heroTag: null,
-                        child: const Icon(Icons.add),
-                        onPressed: () {
-                          _expandableFabKey.currentState?.toggle();
+                  children: [
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            context.navigateTo(
+                              CreateExpenditureRoute(
+                                onExpenseCreated: context
+                                    .read<ExpenditureCubit>()
+                                    .onRefreshExpenditure,
+                              ),
+                            );
+                            // _expandableFabKey.currentState?.toggle();
+                          },
+                          child: const Text('Add Expenditure'),
+                        ),
+                        const SizedBox(width: 20),
+                        FloatingActionButton.small(
+                          heroTag: null,
+                          child: const Icon(Icons.add),
+                          onPressed: () {
+                            _expandableFabKey.currentState?.toggle();
+                            context.navigateTo(
+                              CreateExpenditureRoute(
+                                onExpenseCreated: context
+                                    .read<ExpenditureCubit>()
+                                    .onRefreshExpenditure,
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        context.navigateTo(
                           CreateIncomeRoute(
                             onIncomeCreated:
                                 context.read<IncomeCubit>().onRefreshIncome,
-                          );
-                        },
+                          ),
+                        );
+                        _expandableFabKey.currentState?.toggle();
+                      },
+                      child: Row(
+                        children: [
+                          const Text('Add Revenue'),
+                          const SizedBox(width: 20),
+                          FloatingActionButton.small(
+                            heroTag: null,
+                            child: const Icon(Icons.add),
+                            onPressed: () {
+                              _expandableFabKey.currentState?.toggle();
+                              CreateIncomeRoute(
+                                onIncomeCreated:
+                                    context.read<IncomeCubit>().onRefreshIncome,
+                              );
+                            },
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-              ],
+                    ),
+                  ],
+                );
+              },
             ),
             bottomNavigationBar: BottomNavigationBar(
               onTap: tabsRouter.setActiveIndex,
