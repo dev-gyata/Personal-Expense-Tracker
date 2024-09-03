@@ -34,6 +34,8 @@ BASE_URL=https://personal-expense-tracker.myladder.africa
 
 or check the `.env.example` file for the correct format
 
+and then run flutter pub get to install the dependencies
+
 To run the desired flavor either use the launch configuration in VSCode/Android Studio or use the following commands:
 
 ```sh
