@@ -22,6 +22,7 @@ class AuthenticationRepository {
   Future<void> logIn({
     required String email,
     required String password,
+    required bool rememberMe,
   }) async {
     final loginResponse = await _authenticationService.logIn(
       loginRequestDto: LoginRequestDto(email: email, password: password),
@@ -33,6 +34,7 @@ class AuthenticationRepository {
     // Get user details here
     _authController.add(
       AuthenticationStatusAuthenticated(
+        rememberMe: rememberMe,
         user: UserModel(name: email, email: email, id: 'id'),
       ),
     );
@@ -63,4 +65,10 @@ class AuthenticationRepository {
   }
 
   void dispose() => _authController.close();
+
+  void hydratedUser({required UserModel user, required bool rememberMe}) {
+    _authController.add(
+      AuthenticationStatusAuthenticated(user: user, rememberMe: rememberMe),
+    );
+  }
 }

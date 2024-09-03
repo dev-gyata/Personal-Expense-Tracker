@@ -34,6 +34,14 @@ class LoginCubit extends Cubit<LoginState> {
     );
   }
 
+  void onToggleRememberMe() {
+    emit(
+      state.copyWith(
+        rememberMe: !state.rememberMe,
+      ),
+    );
+  }
+
   // ignore: avoid_void_async
   Future<void> onSubmit() async {
     if (state.isValid) {
@@ -42,6 +50,7 @@ class LoginCubit extends Cubit<LoginState> {
         await _authenticationRepository.logIn(
           email: state.email.value,
           password: state.password.value,
+          rememberMe: state.rememberMe,
         );
         emit(state.copyWith(status: FormzSubmissionStatus.success));
       } on LoginException catch (e) {

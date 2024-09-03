@@ -65,6 +65,7 @@ void main() {
           () => authenticationRepository.logIn(
             email: email,
             password: password,
+            rememberMe: false,
           ),
           returnsNormally,
         );
@@ -89,6 +90,7 @@ void main() {
           () => authenticationRepository.logIn(
             email: email,
             password: password,
+            rememberMe: false,
           ),
           throwsA(isA<LoginException>()),
         );

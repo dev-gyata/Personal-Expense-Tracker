@@ -4,8 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:personal_expense_tracker/resources/resources.dart';
 
 void main() {
-  test('images assets test', () {
-    expect(File(Images.appBarPattern).existsSync(), isTrue);
-    expect(File(Images.emptyStateImage).existsSync(), isTrue);
+  test('animations assets test', () {
+    expect(File(Animations.errorStateAnimation).existsSync(), isTrue);
   });
 }

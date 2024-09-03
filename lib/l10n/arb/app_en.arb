@@ -86,5 +86,12 @@
     "highestExpenditureCategory": "Highest Expenditure Category",
     "expenditureChart": "Expenditure Chart",
     "incomeChart": "Income Chart",
-    "expenditureChartByCategories": "Expenditure chart by Categories"
+    "expenditureChartByCategories": "Expenditure chart by Categories",
+    "noExpenditure": "You haven't added any expenditure yet, you can add an expenditure from the dashboard tab by tapping on the floating action button",
+    "noRevenueHistory": "You haven't added any revenue yet, you can add a revenue from the dashboard tab tapping on the floating action button",
+    "tapHereToRetry": "Tap here to retry",
+    "unableToFetchYourExpenditure": "We were unable to fetch your expenditure",
+    "unableToFetchYourRevenueHistory": "We were unable to fetch your revenue history",
+    "weUnableToConnectToOurServer": "We were unable to connect to ours server, please try again later",
+    "rememberMe": "Remember me"
 }

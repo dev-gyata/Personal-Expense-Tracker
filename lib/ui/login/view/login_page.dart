@@ -99,6 +99,28 @@ class LoginView extends StatelessWidget {
                       );
                     },
                   ),
+                  const Gap(8),
+                  Row(
+                    children: [
+                      Builder(
+                        builder: (context) {
+                          final rememberMe = context.select<LoginCubit, bool>(
+                            (cubit) => cubit.state.rememberMe,
+                          );
+                          return Checkbox(
+                            value: rememberMe,
+                            onChanged: (_) {
+                              context.read<LoginCubit>().onToggleRememberMe();
+                            },
+                          );
+                        },
+                      ),
+                      Text(
+                        l10n.rememberMe,
+                        style: context.smallText,
+                      ),
+                    ],
+                  ),
                   const Gap(20),
                   Builder(
                     builder: (context) {

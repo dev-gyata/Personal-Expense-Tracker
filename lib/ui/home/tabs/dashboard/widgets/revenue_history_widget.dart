@@ -5,6 +5,8 @@ import 'package:personal_expense_tracker/extensions/extensions.dart';
 import 'package:personal_expense_tracker/l10n/l10n.dart';
 import 'package:personal_expense_tracker/ui/home/cubits'
     '/income_cubit/income_cubit.dart';
+import 'package:personal_expense_tracker/ui/widgets/empty_state_widget.dart';
+import 'package:personal_expense_tracker/ui/widgets/error_state_widget.dart';
 import 'package:personal_expense_tracker/ui/widgets/loading_tiles_widget.dart';
 import 'package:personal_expense_tracker/ui/widgets/revenue_tile_widget.dart';
 
@@ -36,7 +38,16 @@ class RevenueHistoryWidget extends StatelessWidget {
                 padding: EdgeInsets.zero,
               );
             }
+            if (incomeStatus.apiStatus.isFailure) {
+              return ErrorStateWidget(
+                onRetry: context.read<IncomeCubit>().onLoadIncome,
+                errorMessage: l10n.unableToFetchYourRevenueHistory,
+              );
+            }
             if (incomeStatus.apiStatus.isSuccess) {
+              if (incomeStatus.income.isEmpty) {
+                return EmptyStateWidget(message: l10n.noRevenueHistory);
+              }
               return ListView.separated(
                 primary: false,
                 shrinkWrap: true,

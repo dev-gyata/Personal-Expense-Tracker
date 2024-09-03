@@ -43,6 +43,7 @@ void main() {
             () => authenticationRepository.logIn(
               email: 'example@example.com',
               password: 'Secure@123',
+              rememberMe: false,
             ),
           ).thenAnswer((_) => Future<void>.value());
         },
@@ -83,6 +84,7 @@ void main() {
             () => authenticationRepository.logIn(
               email: 'bad@credentials.com',
               password: 'Secure@123',
+              rememberMe: false,
             ),
           ).thenAnswer(
             (_) => throw LoginException(message: 'Invalid email or password'),

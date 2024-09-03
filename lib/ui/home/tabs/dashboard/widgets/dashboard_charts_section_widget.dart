@@ -4,12 +4,18 @@ import 'package:gap/gap.dart';
 import 'package:personal_expense_tracker/config/constants/colors.dart';
 import 'package:personal_expense_tracker/extensions/extensions.dart';
 import 'package:personal_expense_tracker/l10n/l10n.dart';
-import 'package:personal_expense_tracker/ui/home/cubits/expenditure_cubit/expenditure_cubit.dart';
-import 'package:personal_expense_tracker/ui/home/cubits/income_cubit/income_cubit.dart';
-import 'package:personal_expense_tracker/ui/home/tabs/dashboard/widgets/expenditure_chart.dart';
-import 'package:personal_expense_tracker/ui/home/tabs/dashboard/widgets/income_chart.dart';
-import 'package:personal_expense_tracker/ui/home/tabs/dashboard/widgets/sumary_card_widget.dart';
-import 'package:personal_expense_tracker/utils/expenditure_utils/expenditure_utils.dart';
+import 'package:personal_expense_tracker/ui/home/cubits/'
+    'expenditure_cubit/expenditure_cubit.dart';
+import 'package:personal_expense_tracker/ui/home/cubits/'
+    'income_cubit/income_cubit.dart';
+import 'package:personal_expense_tracker/ui/home/tabs/dashboard'
+    '/widgets/expenditure_chart.dart';
+import 'package:personal_expense_tracker/ui/home/tabs/dashboard/widgets'
+    '/income_chart.dart';
+import 'package:personal_expense_tracker/ui/home/tabs/dashboard/widgets'
+    '/sumary_card_widget.dart';
+import 'package:personal_expense_tracker/utils'
+    '/expenditure_utils/expenditure_utils.dart';
 
 class DashboardChartsSectionWidget extends StatelessWidget {
   const DashboardChartsSectionWidget({super.key});
@@ -39,12 +45,12 @@ class DashboardChartsSectionWidget extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             children: [
               Builder(
+                // return Sized
                 builder: (context) {
                   final expenditureStatus =
                       context.select<ExpenditureCubit, ExpenditureState>(
                     (cubit) => cubit.state,
                   );
-                  // return const SizedBox.shrink();
                   if (expenditureStatus.apiStatus.isLoading) {
                     return const LoadingSummaryCard();
                   }
@@ -81,7 +87,6 @@ class DashboardChartsSectionWidget extends StatelessWidget {
                   final incomeState = context.select<IncomeCubit, IncomeState>(
                     (cubit) => cubit.state,
                   );
-                  // return const SizedBox.shrink();
                   if (incomeState.apiStatus.isLoading) {
                     return const LoadingSummaryCard();
                   }

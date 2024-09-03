@@ -12,6 +12,23 @@ class IncomeService {
 
   Future<List<IncomeResponseDto>> getUserIncome() async {
     try {
+      return <IncomeResponseDto>[
+        IncomeResponseDto.fromMap(const {
+          'id': '1',
+          'nameOfRevenue': 'Salary',
+          'amount': 100,
+        }),
+        IncomeResponseDto.fromMap(const {
+          'id': '2',
+          'nameOfRevenue': 'Gifts',
+          'amount': 500,
+        }),
+        IncomeResponseDto.fromMap(const {
+          'id': '2',
+          'nameOfRevenue': 'Royalties',
+          'amount': 600,
+        }),
+      ];
       final response = await _dio.get(
         AppEndpoints.incomeEndpoint,
       );

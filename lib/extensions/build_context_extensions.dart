@@ -35,7 +35,7 @@ extension BuildContextExtensions on BuildContext {
               color: AppColors.kWhiteColor,
             ),
             const Gap(10),
-            Text(message),
+            Expanded(child: Text(message)),
           ],
         ),
       ),
@@ -50,7 +50,7 @@ extension BuildContextExtensions on BuildContext {
           children: [
             const Icon(Icons.cancel_outlined, color: AppColors.kWhiteColor),
             const Gap(10),
-            Text(message),
+            Expanded(child: Text(message)),
           ],
         ),
       ),

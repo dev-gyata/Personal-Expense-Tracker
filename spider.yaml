@@ -19,3 +19,8 @@ groups:
   - path: assets/images
     class_name: Images
     types: [ .png, .jpg, .jpeg, .webp, .webm, .svg ]
+  
+  
+  - path: assets/animations
+    class_name: Animations
+    types: [ .gif, .mp4, .webm, .json ]

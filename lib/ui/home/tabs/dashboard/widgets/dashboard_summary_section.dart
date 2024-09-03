@@ -55,7 +55,8 @@ class DashboardSummarySection extends StatelessWidget {
                     highestAmountName: '${l10n.highestIncome}: '
                         '${highestIncome?.nameOfRevenue ?? 'N/A'}',
                     highestAmountText: '${l10n.highestIncomeAmount}: '
-                        'GHS ${highestIncome?.amount ?? '0.00'}',
+                        'GHS '
+                        '${highestIncome?.amount.toStringAsFixed(2) ?? '0.00'}',
                   );
                 },
               ),
@@ -83,13 +84,16 @@ class DashboardSummarySection extends StatelessWidget {
                       ExpenditureUtils.getHighestCategory(
                     expenditures: expenditureState.expenditures,
                   );
+                  final highestExpenditureAmount =
+                      highestExpenditure?.estimatedAmount.toStringAsFixed(2);
                   return SummaryCardWidget(
                     title: l10n.expenditure,
                     total: totalExpenditure.toStringAsFixed(2),
                     highestAmountName: '${l10n.highestExpenditure}: '
                         '${highestExpenditure?.nameOfItem ?? 'N/A'}',
                     highestAmountText: '${l10n.highestExpenditureAmount}: '
-                        'GHS ${highestExpenditure?.estimatedAmount ?? '0.00'}',
+                        'GHS '
+                        '${highestExpenditureAmount ?? '0.00'}',
                     highestRevenueText: '${l10n.highestExpenditureCategory}: '
                         '${highestExpenditureCategory?.name ?? 'N/A'}',
                   );

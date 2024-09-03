@@ -20,8 +20,14 @@ void main() {
       test('supports value comparisons', () {
         final user = MockUser();
         expect(
-          AuthenticationState.authenticated(user),
-          AuthenticationState.authenticated(user),
+          AuthenticationState.authenticated(
+            user: user,
+            rememberMe: false,
+          ),
+          AuthenticationState.authenticated(
+            user: user,
+            rememberMe: false,
+          ),
         );
       });
     });

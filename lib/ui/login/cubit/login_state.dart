@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'login_cubit.dart';
 
 class LoginState extends Equatable {
@@ -7,12 +6,14 @@ class LoginState extends Equatable {
     this.email = const EmailModel.pure(),
     this.password = const PasswordModel.pure(),
     this.isValid = false,
+    this.rememberMe = false,
     this.errorMessage,
   });
   final EmailModel email;
   final PasswordModel password;
   final bool isValid;
   final String? errorMessage;
+  final bool rememberMe;
   final FormzSubmissionStatus status;
 
   @override
@@ -21,6 +22,7 @@ class LoginState extends Equatable {
         email,
         password,
         isValid,
+        rememberMe,
         errorMessage,
       ];
 
@@ -30,6 +32,7 @@ class LoginState extends Equatable {
     bool? isValid,
     FormzSubmissionStatus? status,
     String? errorMessage,
+    bool? rememberMe,
   }) {
     return LoginState(
       email: email ?? this.email,
@@ -37,6 +40,7 @@ class LoginState extends Equatable {
       isValid: isValid ?? this.isValid,
       status: status ?? this.status,
       errorMessage: errorMessage,
+      rememberMe: rememberMe ?? this.rememberMe,
     );
   }
 }

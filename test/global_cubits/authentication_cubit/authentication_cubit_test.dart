@@ -1,5 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:personal_expense_tracker/enums/authentication_status.dart';
 import 'package:personal_expense_tracker/global_cubits/authentication_cubit/authentication_cubit.dart';
@@ -9,7 +10,19 @@ import 'package:personal_expense_tracker/repositories/authentication_repository.
 class MockAuthenticationRepository extends Mock
     implements AuthenticationRepository {}
 
+class MockStorage extends Mock implements Storage {}
+
 void main() {
+  late MockStorage mockStorage;
+  setUp(() {
+    mockStorage = MockStorage();
+    when(
+      () => mockStorage.write(any(), any<dynamic>()),
+    ).thenAnswer((_) async {
+      return;
+    });
+    HydratedBloc.storage = mockStorage;
+  });
   group('AuthenticationCubit Test', () {
     const user = UserModel(name: 'Felix', email: 'felix@example.com', id: '1');
     late AuthenticationRepository mockAuthenticationRepository;
@@ -29,13 +42,20 @@ void main() {
         when(
           () => mockAuthenticationRepository.status,
         ).thenAnswer(
-          (_) =>
-              Stream.value(const AuthenticationStatusAuthenticated(user: user)),
+          (_) => Stream.value(
+            const AuthenticationStatusAuthenticated(
+              rememberMe: false,
+              user: user,
+            ),
+          ),
         );
       },
       act: (cubit) {},
       expect: () => [
-        const AuthenticationState.authenticated(user),
+        const AuthenticationState.authenticated(
+          rememberMe: false,
+          user: user,
+        ),
       ],
     );
 

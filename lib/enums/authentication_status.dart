@@ -9,9 +9,11 @@ sealed class AuthenticationStatus {
 class AuthenticationStatusAuthenticated extends AuthenticationStatus {
   const AuthenticationStatusAuthenticated({
     required this.user,
+    required this.rememberMe,
   });
 
   final UserModel user;
+  final bool rememberMe;
 }
 
 class AuthenticationStatusUnauthenticated extends AuthenticationStatus {
