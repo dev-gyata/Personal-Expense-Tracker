@@ -26,6 +26,14 @@ To run the desired flavor you have to first create it's env file in the root dir
 - staging: `.env.stg`
 - production: `.env.prod`
 
+The contents of the env file should look like this:
+
+```sh
+BASE_URL=https://personal-expense-tracker.myladder.africa
+```
+
+or check the `.env.example` file for the correct format
+
 To run the desired flavor either use the launch configuration in VSCode/Android Studio or use the following commands:
 
 ```sh
