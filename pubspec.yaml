@@ -17,7 +17,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.6
-  flutter_expandable_fab: ^2.2.0
+  flutter_expandable_fab: ^2.3.0
   flutter_hooks: ^0.20.5
   flutter_localizations:
     sdk: flutter
